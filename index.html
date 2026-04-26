@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Finanças Pessoais</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="login-container" class="container">
+        <div class="login-box">
+            <h2>Acesso ao Sistema</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" required placeholder="admin ou user">
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required placeholder="123">
+                </div>
+                <button type="submit" class="btn primary-btn">Entrar</button>
+                <p id="login-error" class="error-msg hidden">Credenciais inválidas!</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-container" class="container hidden">
+        <header class="dashboard-header">
+            <div>
+                <h1>Finanças Pessoais</h1>
+                <p>Bem-vindo(a), <strong id="logged-user-name"></strong> (<span id="logged-user-role"></span>)</p>
+            </div>
+            <button id="logout-btn" class="btn outline-btn">Sair</button>
+        </header>
+
+        <section class="categories-section">
+            <div class="section-header">
+                <h2>Resumo de Gastos</h2>
+                <button id="add-category-btn" class="btn secondary-btn hidden">Nova Categoria</button>
+            </div>
+            <div id="categories-grid" class="cards-grid">
+                </div>
+        </section>
+
+        <section class="transactions-section">
+            <div class="form-card">
+                <h3 id="form-title">Adicionar Nova Transação</h3>
+                <form id="transaction-form">
+                    <input type="hidden" id="trans-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="trans-desc">Descrição</label>
+                            <input type="text" id="trans-desc" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="trans-amount">Valor (R$)</label>
+                            <input type="number" id="trans-amount" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="trans-category">Categoria</label>
+                            <select id="trans-category" required>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-edit-btn" class="btn outline-btn hidden">Cancelar</button>
+                        <button type="submit" class="btn primary-btn" id="save-trans-btn">Salvar Transação</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <h3>Histórico de Transações</h3>
+                <table id="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Valor</th>
+                            <th>Usuário</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
