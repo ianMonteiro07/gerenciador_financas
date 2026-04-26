@@ -1,4 +1,3 @@
-
 const USERS = [
     { login: 'admin', password: '123', role: 'admin' },
     { login: 'user', password: '123', role: 'user' }
@@ -69,12 +68,18 @@ function showDashboard() {
     document.getElementById('logged-user-name').textContent = currentUser.login;
     document.getElementById('logged-user-role').textContent = currentUser.role === 'admin' ? 'Administrador' : 'Usuário Padrão';
 
-
+    // RBAC: Visibilidade de criação de categorias (Mostra bloqueado para User)
     const addCatBtn = document.getElementById('add-category-btn');
+    addCatBtn.classList.remove('hidden'); // Garante que o botão apareça
+    
     if (currentUser.role === 'admin') {
-        addCatBtn.classList.remove('hidden');
+        addCatBtn.disabled = false;
+        addCatBtn.innerHTML = 'Nova Categoria';
+        addCatBtn.title = '';
     } else {
-        addCatBtn.classList.add('hidden');
+        addCatBtn.disabled = true;
+        addCatBtn.innerHTML = '🔒 Nova Categoria';
+        addCatBtn.title = 'Apenas Administradores podem criar categorias';
     }
 
     renderCategoriesSelect();
@@ -98,11 +103,11 @@ function renderDashboard() {
         if (percentage > 100) progressClass = 'progress-danger';
         else if (percentage > 80) progressClass = 'progress-warning';
 
-        
+        // Configuração dos botões da categoria baseada no Cargo
         const configBtnHtml = currentUser.role === 'admin' 
             ? `<button class="btn outline-btn config-limit-btn" onclick="editCategoryName(${cat.id})" style="margin-right: 0.5rem;">Editar Nome</button>
                <button class="btn outline-btn config-limit-btn" onclick="setLimit(${cat.id})">Configurar Limite</button>` 
-            : '';
+            : `<span style="font-size: 0.85rem; color: var(--text-muted);" title="Acesso restrito">🔒 Edição restrita ao Admin</span>`;
 
         grid.innerHTML += `
             <div class="card">
@@ -132,7 +137,6 @@ function renderCategoriesSelect() {
     });
 }
 
-
 document.getElementById('transaction-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const id = document.getElementById('trans-id').value;
@@ -142,7 +146,6 @@ document.getElementById('transaction-form').addEventListener('submit', function(
     const date = new Date().toLocaleDateString('pt-BR');
 
     if (id) {
-        
         const index = transactions.findIndex(t => t.id == id);
         if(index !== -1) {
             transactions[index].desc = desc;
@@ -187,11 +190,16 @@ function renderTransactions() {
         const canDelete = currentUser.role === 'admin'; // Usuário não deleta
 
         let actionsHtml = '';
+        
         if (canEdit) {
             actionsHtml += `<button class="btn edit-btn" onclick="editTransaction(${t.id})">Editar</button>`;
         }
+        
         if (canDelete) {
             actionsHtml += `<button class="btn danger-btn" onclick="deleteTransaction(${t.id})">Deletar</button>`;
+        } else {
+            // Mostra o botão de deletar cinza e com cadeado para o Usuário
+            actionsHtml += `<button class="btn danger-btn" disabled title="Apenas Administradores podem deletar registros">🔒 Deletar</button>`;
         }
 
         tbody.innerHTML += `

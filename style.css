@@ -1,5 +1,4 @@
 :root {
-    
     --primary: #C5A059;       
     --primary-hover: #B08D4C; 
     --secondary: #4A3B32;    
@@ -13,12 +12,10 @@
     --text-muted: #857A70;    
     --border-color: #E6DFD7;  
     
-   
     --progress-ok: #6B705C;      
     --progress-warning: #C5A059;
     --progress-danger: #8C2B2B; 
 
-    
     --radius: 12px; 
     --shadow: 0 10px 25px -5px rgba(74, 59, 50, 0.08), 0 4px 10px -5px rgba(74, 59, 50, 0.04);
 }
@@ -29,7 +26,6 @@
     box-sizing: border-box;
     font-family: 'Inter', sans-serif; 
 }
-
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
@@ -51,7 +47,6 @@ body {
 .hidden {
     display: none !important;
 }
-
 
 .btn {
     padding: 0.6rem 1.2rem;
@@ -156,7 +151,6 @@ input:focus, select:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Fundo com leve gradiente para tela de login ficar mais rica */
     background: radial-gradient(circle at center, #FFFFFF 0%, var(--bg-color) 100%);
 }
 
@@ -183,7 +177,6 @@ input:focus, select:focus {
     font-size: 1rem;
 }
 
-
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -201,7 +194,6 @@ input:focus, select:focus {
 .dashboard-header p {
     color: var(--text-muted);
 }
-
 
 .section-header {
     display: flex;
@@ -226,7 +218,6 @@ input:focus, select:focus {
     position: relative;
     overflow: hidden;
 }
-
 
 .card::before {
     content: '';
@@ -284,7 +275,6 @@ input:focus, select:focus {
     font-size: 0.8rem;
     padding: 0.3rem 0.6rem;
 }
-
 
 .form-card {
     background: var(--card-bg);
@@ -355,6 +345,17 @@ tr:hover td {
     background-color: #FCFAEF; 
 }
 
+/* --- Estilo para botões bloqueados (RBAC Visual) --- */
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    filter: grayscale(100%);
+}
+
+button:disabled:active {
+    transform: none; 
+}
+
 /* =========================================
    RESPONSIVIDADE (Telas de Celular e Tablets)
    ========================================= */
@@ -363,7 +364,6 @@ tr:hover td {
         padding: 1.5rem 1rem;
     }
 
-    /* --- Cabeçalho --- */
     .dashboard-header {
         flex-direction: column;
         align-items: stretch;
@@ -380,7 +380,6 @@ tr:hover td {
         padding: 0.8rem;
     }
 
-   
     .section-header {
         flex-direction: column;
         align-items: stretch;
@@ -400,7 +399,6 @@ tr:hover td {
         gap: 1.2rem;
     }
 
-   
     .form-card {
         padding: 1.5rem 1rem;
     }
@@ -426,7 +424,6 @@ tr:hover td {
         padding: 0.8rem;
     }
 
-
     .table-container {
         padding: 1rem;
     }
@@ -441,7 +438,6 @@ tr:hover td {
         font-size: 0.85rem;
         white-space: nowrap; 
     }
-
 
     .login-box {
         padding: 2.5rem 1.5rem;
