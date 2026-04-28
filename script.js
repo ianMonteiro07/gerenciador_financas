@@ -68,9 +68,8 @@ function showDashboard() {
     document.getElementById('logged-user-name').textContent = currentUser.login;
     document.getElementById('logged-user-role').textContent = currentUser.role === 'admin' ? 'Administrador' : 'Usuário Padrão';
 
-    // RBAC: Visibilidade de criação de categorias (Mostra bloqueado para User)
     const addCatBtn = document.getElementById('add-category-btn');
-    addCatBtn.classList.remove('hidden'); // Garante que o botão apareça
+    addCatBtn.classList.remove('hidden'); 
     
     if (currentUser.role === 'admin') {
         addCatBtn.disabled = false;
@@ -92,7 +91,6 @@ function renderDashboard() {
     grid.innerHTML = '';
 
     categories.forEach(cat => {
-        // Calcula gasto total desta categoria
         const totalSpent = transactions
             .filter(t => parseInt(t.categoryId) === cat.id)
             .reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
@@ -103,7 +101,6 @@ function renderDashboard() {
         if (percentage > 100) progressClass = 'progress-danger';
         else if (percentage > 80) progressClass = 'progress-warning';
 
-        // Configuração dos botões da categoria baseada no Cargo
         const configBtnHtml = currentUser.role === 'admin' 
             ? `<button class="btn outline-btn config-limit-btn" onclick="editCategoryName(${cat.id})" style="margin-right: 0.5rem;">Editar Nome</button>
                <button class="btn outline-btn config-limit-btn" onclick="setLimit(${cat.id})">Configurar Limite</button>` 
@@ -157,7 +154,6 @@ document.getElementById('transaction-form').addEventListener('submit', function(
         document.getElementById('cancel-edit-btn').classList.add('hidden');
         document.getElementById('form-title').textContent = 'Adicionar Nova Transação';
     } else {
-        // Criar nova
         const novaTransacao = {
             id: Date.now(),
             desc,
@@ -176,18 +172,24 @@ document.getElementById('transaction-form').addEventListener('submit', function(
     this.reset();
 });
 
-
 function renderTransactions() {
     const tbody = document.getElementById('transactions-body');
     tbody.innerHTML = '';
 
-    transactions.forEach(t => {
+    // --- Lógica de Filtro de Busca adicionada aqui ---
+    const searchInput = document.getElementById('search-input');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+    const filteredTransactions = transactions.filter(t => 
+        t.desc.toLowerCase().includes(searchTerm)
+    );
+
+    filteredTransactions.forEach(t => {
         const cat = categories.find(c => c.id == t.categoryId);
         const catName = cat ? cat.name : 'Desconhecida';
         
-        // Regras de RBAC para Ações
         const canEdit = currentUser.role === 'admin' || t.user === currentUser.login;
-        const canDelete = currentUser.role === 'admin'; // Usuário não deleta
+        const canDelete = currentUser.role === 'admin'; 
 
         let actionsHtml = '';
         
@@ -198,7 +200,6 @@ function renderTransactions() {
         if (canDelete) {
             actionsHtml += `<button class="btn danger-btn" onclick="deleteTransaction(${t.id})">Deletar</button>`;
         } else {
-            // Mostra o botão de deletar cinza e com cadeado para o Usuário
             actionsHtml += `<button class="btn danger-btn" disabled title="Apenas Administradores podem deletar registros">🔒 Deletar</button>`;
         }
 
@@ -215,7 +216,6 @@ function renderTransactions() {
     });
 }
 
-
 window.editTransaction = function(id) {
     const t = transactions.find(t => t.id == id);
     if (!t) return;
@@ -230,14 +230,12 @@ window.editTransaction = function(id) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-
 document.getElementById('cancel-edit-btn').addEventListener('click', () => {
     document.getElementById('transaction-form').reset();
     document.getElementById('trans-id').value = '';
     document.getElementById('form-title').textContent = 'Adicionar Nova Transação';
     document.getElementById('cancel-edit-btn').classList.add('hidden');
 });
-
 
 window.deleteTransaction = function(id) {
     if (confirm('Tem certeza que deseja deletar este registro?')) {
@@ -248,7 +246,6 @@ window.deleteTransaction = function(id) {
         alert('Registro deletado.');
     }
 }
-
 
 window.setLimit = function(id) {
     const cat = categories.find(c => c.id == id);
@@ -262,12 +259,10 @@ window.setLimit = function(id) {
     }
 }
 
-
 window.editCategoryName = function(id) {
     const cat = categories.find(c => c.id == id);
     const novoNome = prompt(`Digite o novo nome para a categoria "${cat.name}":`, cat.name);
     
-
     if (novoNome !== null && novoNome.trim() !== '') {
         cat.name = novoNome.trim();
         saveData(); 
@@ -277,7 +272,6 @@ window.editCategoryName = function(id) {
         alert('Nome da categoria atualizado com sucesso!');
     }
 }
-
 
 document.getElementById('add-category-btn').addEventListener('click', () => {
     const nome = prompt('Nome da nova categoria:');
@@ -296,5 +290,11 @@ document.getElementById('add-category-btn').addEventListener('click', () => {
     renderDashboard();
     alert('Categoria criada!');
 });
+
+// --- Event Listener para a Busca em Tempo Real ---
+const searchInputEl = document.getElementById('search-input');
+if (searchInputEl) {
+    searchInputEl.addEventListener('input', renderTransactions);
+}
 
 initApp();

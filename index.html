@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Finanças Pessoais</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="login-container" class="container">
@@ -72,7 +72,11 @@
             </div>
 
             <div class="table-container">
-                <h3>Histórico de Transações</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
+                    <h3 style="margin-bottom: 0;">Histórico de Transações</h3>
+                    <input type="text" id="search-input" placeholder="🔍 Buscar transação..." style="min-width: 250px;">
+                </div>
+                
                 <table id="transactions-table">
                     <thead>
                         <tr>
