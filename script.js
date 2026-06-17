@@ -290,33 +290,6 @@ document.getElementById('add-category-btn').addEventListener('click', () => {
     alert('Categoria criada!');
 });
 
-const searchInputEl = document.getElementById('search-input');
-if (searchInputEl) {
-    searchInputEl.addEventListener('input', renderTransactions);
-}
-
-// --- LÓGICA DO MODO ESCURO ---
-const themeToggleBtn = document.getElementById('theme-toggle');
-
-if (themeToggleBtn) {
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeToggleBtn.textContent = '☀️ Claro';
-    }
-
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-        
-        if (document.body.classList.contains('dark-theme')) {
-            localStorage.setItem('theme', 'dark');
-            themeToggleBtn.textContent = '☀️ Claro';
-        } else {
-            localStorage.setItem('theme', 'light');
-            themeToggleBtn.textContent = '🌙 Escuro';
-        }
-    });
-}
-
 // --- LÓGICA DE EXPORTAR PLANILHA ---
 const exportBtn = document.getElementById('export-btn');
 
