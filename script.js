@@ -176,7 +176,14 @@ function renderTransactions() {
     const tbody = document.getElementById('transactions-body');
     tbody.innerHTML = '';
 
-    transactions.forEach(t => {
+    const searchInput = document.getElementById('search-input');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+    const filteredTransactions = transactions.filter(t => 
+        t.desc.toLowerCase().includes(searchTerm)
+    );
+
+    filteredTransactions.forEach(t => {
         const cat = categories.find(c => c.id == t.categoryId);
         const catName = cat ? cat.name : 'Desconhecida';
         
