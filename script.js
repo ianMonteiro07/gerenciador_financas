@@ -176,7 +176,6 @@ function renderTransactions() {
     const tbody = document.getElementById('transactions-body');
     tbody.innerHTML = '';
 
-    // --- Lógica de Filtro de Busca adicionada aqui ---
     const searchInput = document.getElementById('search-input');
     const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
 
@@ -291,10 +290,63 @@ document.getElementById('add-category-btn').addEventListener('click', () => {
     alert('Categoria criada!');
 });
 
-// --- Event Listener para a Busca em Tempo Real ---
 const searchInputEl = document.getElementById('search-input');
 if (searchInputEl) {
     searchInputEl.addEventListener('input', renderTransactions);
+}
+
+// --- LÓGICA DO MODO ESCURO ---
+const themeToggleBtn = document.getElementById('theme-toggle');
+
+if (themeToggleBtn) {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggleBtn.textContent = '☀️ Claro';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        
+        if (document.body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            themeToggleBtn.textContent = '☀️ Claro';
+        } else {
+            localStorage.setItem('theme', 'light');
+            themeToggleBtn.textContent = '🌙 Escuro';
+        }
+    });
+}
+
+// --- LÓGICA DE EXPORTAR PLANILHA ---
+const exportBtn = document.getElementById('export-btn');
+
+if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+        if (transactions.length === 0) {
+            alert('Não tem nenhuma transação para baixar!');
+            return;
+        }
+
+        let csvContent = "Data,Descricao,Categoria,Valor,Usuario\n";
+
+        transactions.forEach(t => {
+            const cat = categories.find(c => c.id == t.categoryId);
+            const catName = cat ? cat.name : 'Desconhecida';
+            
+            csvContent += `${t.date},${t.desc},${catName},${t.amount},${t.user}\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute("href", url);
+        link.setAttribute("download", "meus_gastos.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click(); 
+        document.body.removeChild(link);
+    });
 }
 
 initApp();
