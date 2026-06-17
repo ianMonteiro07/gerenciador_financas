@@ -4,18 +4,14 @@
     --secondary: #4A3B32;    
     --danger: #8C2B2B;       
     --danger-hover: #6B1F1F;
-    
-    /* Fundos e Textos */
     --bg-color: #FDFCF8;     
     --card-bg: #FFFFFF;      
     --text-main: #2C241B;     
     --text-muted: #857A70;    
     --border-color: #E6DFD7;  
-    
     --progress-ok: #6B705C;      
     --progress-warning: #C5A059;
     --progress-danger: #8C2B2B; 
-
     --radius: 12px; 
     --shadow: 0 10px 25px -5px rgba(74, 59, 50, 0.08), 0 4px 10px -5px rgba(74, 59, 50, 0.04);
 }
@@ -65,6 +61,7 @@ body {
     color: white; 
     box-shadow: 0 4px 6px rgba(197, 160, 89, 0.25);
 }
+
 .primary-btn:hover { 
     background-color: var(--primary-hover); 
     box-shadow: 0 6px 12px rgba(197, 160, 89, 0.35);
@@ -74,6 +71,7 @@ body {
     background-color: var(--secondary); 
     color: white; 
 }
+
 .secondary-btn:hover {
     background-color: #332822;
 }
@@ -84,6 +82,7 @@ body {
     padding: 0.4rem 0.8rem; 
     font-size: 0.85rem;
 }
+
 .danger-btn:hover { background-color: var(--danger-hover); }
 
 .outline-btn { 
@@ -91,6 +90,7 @@ body {
     border: 1px solid var(--primary); 
     color: var(--primary-hover); 
 }
+
 .outline-btn:hover { 
     background-color: var(--primary); 
     color: white;
@@ -103,11 +103,11 @@ body {
     font-size: 0.85rem; 
     margin-right: 0.5rem;
 }
+
 .edit-btn:hover {
     background-color: var(--primary-hover);
 }
 
-/* --- Formulários --- */
 .form-group {
     margin-bottom: 1.2rem;
     display: flex;
@@ -145,7 +145,6 @@ input:focus, select:focus {
     font-weight: 500;
 }
 
-/* --- Tela de Login --- */
 #login-container {
     height: 100vh;
     display: flex;
@@ -345,7 +344,6 @@ tr:hover td {
     background-color: #FCFAEF; 
 }
 
-/* --- Estilo para botões bloqueados (RBAC Visual) --- */
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed !important;
@@ -356,9 +354,6 @@ button:disabled:active {
     transform: none; 
 }
 
-/* =========================================
-   RESPONSIVIDADE (Telas de Celular e Tablets)
-   ========================================= */
 @media (max-width: 768px) {
     .container {
         padding: 1.5rem 1rem;
@@ -443,4 +438,36 @@ button:disabled:active {
         padding: 2.5rem 1.5rem;
         margin: 1rem;
     }
+}
+
+body.dark-theme {
+    --bg-color: #121212;
+    --card-bg: #1E1E1E;
+    --text-main: #E0E0E0;
+    --text-muted: #A0A0A0;
+    --border-color: #333333;
+}
+
+body.dark-theme h1, 
+body.dark-theme h2, 
+body.dark-theme h3, 
+body.dark-theme h4, 
+body.dark-theme h5, 
+body.dark-theme h6 {
+    color: var(--primary);
+}
+
+body.dark-theme th {
+    background-color: rgba(197, 160, 89, 0.15); 
+    color: var(--text-main);
+}
+
+body.dark-theme tr:hover td {
+    background-color: #2A2A2A; 
+}
+
+body.dark-theme input, body.dark-theme select {
+    background-color: #2A2A2A;
+    color: #E0E0E0;
+    border-color: #444;
 }

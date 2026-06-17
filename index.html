@@ -32,7 +32,11 @@
                 <h1>Finanças Pessoais</h1>
                 <p>Bem-vindo(a), <strong id="logged-user-name"></strong> (<span id="logged-user-role"></span>)</p>
             </div>
-            <button id="logout-btn" class="btn outline-btn">Sair</button>
+            <div style="display: flex; align-items: center;">
+                <button id="theme-toggle" class="btn outline-btn" style="margin-right: 10px;">🌙 Escuro</button>
+                
+                <button id="logout-btn" class="btn outline-btn">Sair</button>
+            </div>
         </header>
 
         <section class="categories-section">
@@ -73,7 +77,12 @@
 
             <div class="table-container">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
-                    <h3 style="margin-bottom: 0;">Histórico de Transações</h3>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <h3 style="margin-bottom: 0;">Histórico de Transações</h3>
+                        
+                        <button id="export-btn" class="btn secondary-btn">📊 Baixar Planilha</button>
+                    </div>
+                    
                     <input type="text" id="search-input" placeholder="🔍 Buscar transação..." style="min-width: 250px;">
                 </div>
                 
